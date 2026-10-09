@@ -17,3 +17,4 @@ All notable changes to this project are recorded here. The format follows
 - 90-day response cache and a log of answered questions for `recall`.
 - Saved places and the cache in `~/.local/share/swiggy-food/`, so they survive plugin
   updates.
+- MIT license.

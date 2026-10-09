@@ -4,7 +4,7 @@ Live queries against Swiggy's public web endpoints, backing the `food-research` 
 The repository is a Claude Code plugin and its own marketplace.
 
 ```text
-/plugin marketplace add <owner>/<repo>
+/plugin marketplace add tanmay763/what-to-order
 /plugin install swiggy-food@swiggy-food
 ```
 
@@ -67,3 +67,7 @@ This uses Swiggy's unofficial web API, which is against their terms and can brea
 notice. Fine for personal use; do not build anything durable on it. The sanctioned route
 is the Swiggy Builders Club MCP at `mcp.swiggy.com/food`, which needs no approval for
 local development.
+
+## License
+
+MIT. See `LICENSE`.

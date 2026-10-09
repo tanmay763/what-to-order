@@ -3,6 +3,8 @@ name = "swiggy-food"
 version = "0.1.0"
 description = "Live Swiggy restaurant and menu queries for the food-research skill"
 readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
 authors = [
     { name = "Tanmay Shrivastava" }
 ]

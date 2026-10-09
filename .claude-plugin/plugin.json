@@ -3,6 +3,17 @@
   "displayName": "Swiggy food research",
   "version": "0.1.0",
   "description": "Find and rank the best restaurants or dishes for a delivery address using live Swiggy data",
-  "author": { "name": "Tanmay Shrivastava" },
-  "keywords": ["swiggy", "food", "restaurants", "delivery", "india"]
+  "author": {
+    "name": "Tanmay Shrivastava"
+  },
+  "homepage": "https://github.com/tanmay763/what-to-order",
+  "repository": "https://github.com/tanmay763/what-to-order",
+  "license": "MIT",
+  "keywords": [
+    "swiggy",
+    "food",
+    "restaurants",
+    "delivery",
+    "india"
+  ]
 }
