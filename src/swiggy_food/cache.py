@@ -27,12 +27,15 @@ import time
 from pathlib import Path
 from typing import Any
 
-TTL = 90 * 24 * 3600           # keep for 90 days
-STALE_AFTER = 3 * 24 * 3600    # past this, say so in every read
+TTL = 90 * 24 * 3600  # keep for 90 days
+STALE_AFTER = 3 * 24 * 3600  # past this, say so in every read
 
 # Outside the package, so an installed copy (a plugin update replaces the code
 # directory) keeps its saved places and cache.
-DATA = Path(os.environ.get("XDG_DATA_HOME") or Path.home() / ".local/share") / "swiggy-food"
+DATA = (
+    Path(os.environ.get("XDG_DATA_HOME") or Path.home() / ".local/share")
+    / "swiggy-food"
+)
 ROOT = Path(os.environ.get("SWIGGY_FOOD_CACHE") or DATA / "cache")
 RESPONSES = ROOT / "responses"
 QUERY_LOG = ROOT / "queries.jsonl"
@@ -91,8 +94,12 @@ def get(kind: str, params: dict, ttl: float = TTL) -> tuple[Any, float] | None:
 
 def put(kind: str, params: dict, payload: Any) -> None:
     RESPONSES.mkdir(parents=True, exist_ok=True)
-    entry = {"kind": kind, "params": _norm(params), "fetched_at": time.time(),
-             "payload": payload}
+    entry = {
+        "kind": kind,
+        "params": _norm(params),
+        "fetched_at": time.time(),
+        "payload": payload,
+    }
     tmp = _path(kind, params).with_suffix(".tmp")
     tmp.write_bytes(gzip.compress(json.dumps(entry).encode()))
     tmp.replace(_path(kind, params))
