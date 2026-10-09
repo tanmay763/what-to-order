@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+data/raw/
+.env
+places.json
+.cache/
+.DS_Store
