@@ -1,12 +1,12 @@
 {
-  "name": "swiggy-food",
+  "name": "what-to-order",
   "owner": {
     "name": "Tanmay Shrivastava"
   },
   "description": "Live Swiggy restaurant and dish research for Claude Code",
   "plugins": [
     {
-      "name": "swiggy-food",
+      "name": "what-to-order",
       "source": "./",
       "description": "Find and rank the best restaurants or dishes for a delivery address using live Swiggy data"
     }

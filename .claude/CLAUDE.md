@@ -1,6 +1,6 @@
-# swiggy-food
+# what-to-order
 
-This repository is the `swiggy-food` Claude Code plugin and its own marketplace. The
+This repository is the `what-to-order` Claude Code plugin and its own marketplace. The
 README covers the layout, the CLI, and where data lives.
 
 ## Checks
