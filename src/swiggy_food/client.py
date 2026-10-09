@@ -79,7 +79,13 @@ def _fetch(kind: str, base: str, q: dict, fresh: bool) -> Any:
 
 
 def search(term: str, lat: float, lng: float, fresh: bool = False) -> Any:
-    q = {"lat": lat, "lng": lng, "str": term, "trackingId": "null", "submitAction": "ENTER"}
+    q = {
+        "lat": lat,
+        "lng": lng,
+        "str": term,
+        "trackingId": "null",
+        "submitAction": "ENTER",
+    }
     return _fetch("search", SEARCH, q, fresh)
 
 

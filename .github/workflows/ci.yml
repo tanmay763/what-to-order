@@ -1,0 +1,27 @@
+# Every PR: the lint, plugin validation and smoke test, as `make check` runs them locally.
+name: ci
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+
+concurrency:
+  group: ci-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.12.19"
+      - run: uv sync --locked
+      - run: npm install -g @anthropic-ai/claude-code@2.1.296
+      - name: Checks
+        run: make check

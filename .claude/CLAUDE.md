@@ -7,8 +7,12 @@ README covers the layout, the CLI, and where data lives.
 
 - Run the CLI from the checkout with `uv run swiggy-food <command>`.
 - Load the plugin in place with `claude --plugin-dir .`.
-- Run `claude plugin validate .` after you change anything under `.claude-plugin/`,
-  `skills/`, or `bin/`. It must report `Validation passed` with no warnings.
+- Run `make check` before you open a PR. It runs ruff, `claude plugin validate --strict`,
+  a check that the two version strings match, and an offline smoke test of the CLI. CI
+  runs the same target as the required `ci` check on every PR to `main`.
+- `main` takes changes only through squash-merged PRs.
+- Ruff is a dev dependency. `bin/swiggy-food` runs with `--no-dev`, so plugin users never
+  install it.
 
 This file is in `.claude/` and not at the repository root. The validator warns about a
 `CLAUDE.md` at the plugin root.

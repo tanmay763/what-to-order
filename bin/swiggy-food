@@ -1,2 +1,2 @@
 #!/bin/sh
-exec uv run --quiet --project "$(dirname "$(realpath "$0")")/.." swiggy-food "$@"
+exec uv run --quiet --no-dev --project "$(dirname "$(realpath "$0")")/.." swiggy-food "$@"

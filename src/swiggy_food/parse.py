@@ -7,12 +7,13 @@ documents the specific shape that breaks the obvious implementation.
 from __future__ import annotations
 
 import re
-from typing import Any, Callable, Iterator
+from collections.abc import Iterator
+from typing import Any
 
 NUTRI = re.compile(
     r"Energy:\s*([\d.]+)\s*kcal.*?Protein:\s*([\d.]+)\s*g.*?"
     r"Carbohydrates:\s*([\d.]+)\s*g.*?Fat:\s*([\d.]+)\s*g",
-    re.I | re.S,
+    re.IGNORECASE | re.DOTALL,
 )
 
 IMG_BASE = "https://media-assets.swiggy.com/swiggy/image/upload/"
@@ -154,34 +155,44 @@ def search_results(doc: Any) -> tuple[list[dict], dict[int, dict]]:
                     continue
                 r, cnt = rating(i)
                 desc = i.get("description") or ""
-                dishes.append({
-                    "dish": i.get("name"),
-                    "price": rupees(i.get("price") or i.get("defaultPrice")),
-                    "rating": r,
-                    "n": cnt,
-                    "veg": i.get("isVeg") == 1,
-                    "restaurant": owner.get("name"),
-                    "restaurant_id": owner.get("id"),
-                    "shop_rating": owner.get("avgRating"),
-                    "shop_n": count(owner.get("totalRatingsString")),
-                    "km": km(owner.get("sla")),
-                    "cuisines": owner.get("cuisines") or [],
-                    "description": desc,
-                    "nutrition": nutrition(desc),
-                    "image_url": image_url(i.get("imageId")),
-                })
+                dishes.append(
+                    {
+                        "dish": i.get("name"),
+                        "price": rupees(i.get("price") or i.get("defaultPrice")),
+                        "rating": r,
+                        "n": cnt,
+                        "veg": i.get("isVeg") == 1,
+                        "restaurant": owner.get("name"),
+                        "restaurant_id": owner.get("id"),
+                        "shop_rating": owner.get("avgRating"),
+                        "shop_n": count(owner.get("totalRatingsString")),
+                        "km": km(owner.get("sla")),
+                        "cuisines": owner.get("cuisines") or [],
+                        "description": desc,
+                        "nutrition": nutrition(desc),
+                        "image_url": image_url(i.get("imageId")),
+                    }
+                )
 
         i = n.get("info")
-        if isinstance(i, dict) and i.get("id") and i.get("name") and isinstance(i.get("sla"), dict):
-            restaurants.setdefault(i["id"], {
-                "name": i["name"],
-                "id": i["id"],
-                "rating": i.get("avgRating"),
-                "n": count(i.get("totalRatingsString")),
-                "km": km(i.get("sla")),
-                "cuisines": i.get("cuisines") or [],
-                "image_url": image_url(i.get("cloudinaryImageId")),
-            })
+        if (
+            isinstance(i, dict)
+            and i.get("id")
+            and i.get("name")
+            and isinstance(i.get("sla"), dict)
+        ):
+            restaurants.setdefault(
+                i["id"],
+                {
+                    "name": i["name"],
+                    "id": i["id"],
+                    "rating": i.get("avgRating"),
+                    "n": count(i.get("totalRatingsString")),
+                    "km": km(i.get("sla")),
+                    "cuisines": i.get("cuisines") or [],
+                    "image_url": image_url(i.get("cloudinaryImageId")),
+                },
+            )
 
     return dishes, restaurants
 
@@ -215,13 +226,15 @@ def menu_items(doc: Any) -> tuple[dict, list[dict]]:
             continue
 
         if not shop and i.get("name") and i.get("avgRating") and "sla" in i:
-            shop.update({
-                "name": i["name"],
-                "rating": i.get("avgRating"),
-                "n": count(i.get("totalRatingsString")),
-                "km": km(i.get("sla")),
-                "image_url": image_url(i.get("cloudinaryImageId")),
-            })
+            shop.update(
+                {
+                    "name": i["name"],
+                    "rating": i.get("avgRating"),
+                    "n": count(i.get("totalRatingsString")),
+                    "km": km(i.get("sla")),
+                    "image_url": image_url(i.get("cloudinaryImageId")),
+                }
+            )
 
         if i.get("id") and i.get("name") and (i.get("price") or i.get("defaultPrice")):
             r, cnt = rating(i)
@@ -236,12 +249,20 @@ def menu_items(doc: Any) -> tuple[dict, list[dict]]:
                 "nutrition": nutrition(desc),
                 "image_url": image_url(i.get("imageId")),
                 "addons": [
-                    {"group": g.get("groupName"), "name": c.get("name"), "price": rupees(c.get("price"))}
+                    {
+                        "group": g.get("groupName"),
+                        "name": c.get("name"),
+                        "price": rupees(c.get("price")),
+                    }
                     for g in (i.get("addons") or [])
                     for c in (g.get("choices") or [])
                 ],
                 "variants": [
-                    {"group": vg.get("name"), "name": v.get("name"), "price": rupees(v.get("price"))}
+                    {
+                        "group": vg.get("name"),
+                        "name": v.get("name"),
+                        "price": rupees(v.get("price")),
+                    }
                     for vg in ((i.get("variantsV2") or {}).get("variantGroups") or [])
                     for v in (vg.get("variations") or [])
                 ],

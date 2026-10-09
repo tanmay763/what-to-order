@@ -38,7 +38,9 @@ class LocationUnknown(RuntimeError):
 
 
 def _get(url: str) -> Any:
-    req = urllib.request.Request(url, headers={"User-Agent": UA, "Accept": "application/json"})
+    req = urllib.request.Request(
+        url, headers={"User-Agent": UA, "Accept": "application/json"}
+    )
     with urllib.request.urlopen(req, timeout=20) as r:
         return json.loads(r.read())
 
@@ -46,8 +48,10 @@ def _get(url: str) -> Any:
 def haversine(lat1: float, lng1: float, lat2: float, lng2: float) -> float:
     """Straight-line km. Road distance is longer; Swiggy reports its own."""
     r = math.radians
-    a = (math.sin(r(lat2 - lat1) / 2) ** 2
-         + math.cos(r(lat1)) * math.cos(r(lat2)) * math.sin(r(lng2 - lng1) / 2) ** 2)
+    a = (
+        math.sin(r(lat2 - lat1) / 2) ** 2
+        + math.cos(r(lat1)) * math.cos(r(lat2)) * math.sin(r(lng2 - lng1) / 2) ** 2
+    )
     return 2 * 6371 * math.asin(math.sqrt(a))
 
 
@@ -59,17 +63,20 @@ def geocode(query: str, limit: int = 5) -> list[dict]:
     restaurants around the wrong Koramangala. Include the city in the query
     when you know it.
     """
-    q = urllib.parse.urlencode({"q": query, "format": "json", "limit": limit,
-                                "addressdetails": 1})
+    q = urllib.parse.urlencode(
+        {"q": query, "format": "json", "limit": limit, "addressdetails": 1}
+    )
     out = []
     for row in _get(f"{NOMINATIM}?{q}"):
-        out.append({
-            "label": row.get("display_name"),
-            "name": row.get("name"),
-            "lat": float(row["lat"]),
-            "lng": float(row["lon"]),
-            "kind": row.get("addresstype") or row.get("type"),
-        })
+        out.append(
+            {
+                "label": row.get("display_name"),
+                "name": row.get("name"),
+                "lat": float(row["lat"]),
+                "lng": float(row["lon"]),
+                "kind": row.get("addresstype") or row.get("type"),
+            }
+        )
     return out
 
 
@@ -83,7 +90,7 @@ def ip_fix() -> dict | None:
     """
     try:
         d = _get(IP_LOOKUP)
-    except Exception:
+    except (OSError, ValueError):
         return None
     if d.get("status") != "success":
         return None
@@ -117,7 +124,9 @@ def save_place(name: str, lat: float, lng: float, label: str = "") -> Path:
     return PLACES_FILE
 
 
-def resolve(place: str | None, lat: float | None, lng: float | None) -> tuple[float, float, str]:
+def resolve(
+    place: str | None, lat: float | None, lng: float | None
+) -> tuple[float, float, str]:
     """Turn whatever the caller supplied into one coordinate.
 
     Explicit coordinates win. Then a saved place by name. Then a geocoded
@@ -137,15 +146,27 @@ def resolve(place: str | None, lat: float | None, lng: float | None) -> tuple[fl
 
     saved = load_places().get(place)
     if saved:
-        return saved["lat"], saved["lng"], f"saved place '{place}' ({saved.get('label') or ''})".strip()
+        return (
+            saved["lat"],
+            saved["lng"],
+            f"saved place '{place}' ({saved.get('label') or ''})".strip(),
+        )
 
     hits = geocode(place)
     if not hits:
-        raise LocationUnknown(f"Could not geocode {place!r}. Add the city and try again.")
+        raise LocationUnknown(
+            f"Could not geocode {place!r}. Add the city and try again."
+        )
     if len(hits) > 1:
-        far = [h for h in hits if haversine(hits[0]["lat"], hits[0]["lng"], h["lat"], h["lng"]) > 2]
+        far = [
+            h
+            for h in hits
+            if haversine(hits[0]["lat"], hits[0]["lng"], h["lat"], h["lng"]) > 2
+        ]
         if far:
-            opts = "\n".join(f"  {h['lat']:.4f},{h['lng']:.4f}  {h['label']}" for h in hits)
+            opts = "\n".join(
+                f"  {h['lat']:.4f},{h['lng']:.4f}  {h['label']}" for h in hits
+            )
             raise LocationUnknown(
                 f"{place!r} is ambiguous -- {len(hits)} candidates more than 2km apart:\n{opts}\n"
                 "Re-run with the city included, or with --lat/--lng."
