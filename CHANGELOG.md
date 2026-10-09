@@ -10,7 +10,7 @@ All notable changes to this project are recorded here. The format follows
 
 ### Added
 
-- `food-research` skill, packaged as the `swiggy-food` Claude Code plugin. The repository
+- `food-research` skill, packaged as the `what-to-order` Claude Code plugin. The repository
   is also the plugin's marketplace.
 - `swiggy-food` CLI with `locate`, `places`, `search`, `menu`, `near`, `recall`, and
   `cache` commands. The plugin puts it on the Bash `PATH` through `bin/swiggy-food`.

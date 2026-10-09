@@ -1,11 +1,11 @@
-# swiggy-food
+# what-to-order
 
 Live queries against Swiggy's public web endpoints, backing the `food-research` skill.
 The repository is a Claude Code plugin and its own marketplace.
 
 ```text
 /plugin marketplace add tanmay763/what-to-order
-/plugin install swiggy-food@swiggy-food
+/plugin install what-to-order@what-to-order
 ```
 
 The plugin puts `swiggy-food` on the Bash `PATH` and needs [`uv`](https://docs.astral.sh/uv/).
