@@ -1,6 +1,6 @@
 [project]
 name = "swiggy-food"
-version = "0.1.0"
+version = "0.1.1"
 description = "Live Swiggy restaurant and menu queries for the food-research skill"
 readme = "README.md"
 license = "MIT"

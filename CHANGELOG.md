@@ -6,6 +6,8 @@ All notable changes to this project are recorded here. The format follows
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-10-10
+
 ### Changed
 
 - The CLI wrapper moved from `bin/swiggy-food` to `scripts/swiggy-food`, and the skill runs it

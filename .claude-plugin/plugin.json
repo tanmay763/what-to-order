@@ -1,7 +1,7 @@
 {
   "name": "what-to-order",
   "displayName": "What to order",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Find and rank the best restaurants or dishes for a delivery address using live Swiggy data",
   "author": {
     "name": "Tanmay Shrivastava"
