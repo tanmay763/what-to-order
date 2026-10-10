@@ -1,4 +1,5 @@
-# Every PR: the lint, plugin validation and smoke test, as `make check` runs them locally.
+# Every PR: the branch prefix, then the lint, plugin validation and smoke test, as
+# `make check` runs them locally.
 name: ci
 
 on:
@@ -17,6 +18,18 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     steps:
+      # The branch name says what kind of change the PR is. Rename a claude/ branch before opening a PR.
+      - name: Branch prefix
+        env:
+          HEAD_REF: ${{ github.head_ref }}
+        run: |
+          case "$HEAD_REF" in
+            feat/*|fix/*|chore/*|docs/*|refactor/*|test/*|perf/*|ci/*|build/*|revert/*) ;;
+            *)
+              echo "::error::Branch '$HEAD_REF' needs one of these prefixes: feat/ fix/ chore/ docs/ refactor/ test/ perf/ ci/ build/ revert/"
+              exit 1
+              ;;
+          esac
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v6
         with:

@@ -11,6 +11,10 @@ README covers the layout, the CLI, and where data lives.
   a check that the two version strings match, and an offline smoke test of the CLI. CI
   runs the same target as the required `ci` check on every PR to `main`.
 - `main` takes changes only through squash-merged PRs.
+- A PR's branch must start with a prefix that names the kind of change: `feat/`, `fix/`,
+  `chore/`, `docs/`, `refactor/`, `test/`, `perf/`, `ci/`, `build/` or `revert/`. The `ci`
+  check fails otherwise. If you work on a `claude/` branch, push the finished work to a
+  branch with the right prefix, such as `fix/places-cache`, and open the PR from it.
 - Ruff is a dev dependency. `bin/swiggy-food` runs with `--no-dev`, so plugin users never
   install it.
 
