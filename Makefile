@@ -12,7 +12,7 @@ validate:
 
 # Offline: an empty data directory, no Swiggy or geocoding calls.
 smoke:
-	XDG_DATA_HOME="$$(mktemp -d)" bin/swiggy-food places
-	XDG_DATA_HOME="$$(mktemp -d)" bin/swiggy-food cache
+	XDG_DATA_HOME="$$(mktemp -d)" scripts/swiggy-food places
+	XDG_DATA_HOME="$$(mktemp -d)" scripts/swiggy-food cache
 
 .PHONY: check lint validate smoke

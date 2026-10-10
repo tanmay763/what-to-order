@@ -8,7 +8,7 @@ The repository is a Claude Code plugin and its own marketplace.
 /plugin install what-to-order@what-to-order
 ```
 
-The plugin puts `swiggy-food` on the Bash `PATH` and needs [`uv`](https://docs.astral.sh/uv/).
+The skill runs `scripts/swiggy-food` from the plugin directory and needs [`uv`](https://docs.astral.sh/uv/).
 To try local changes without installing, run `claude --plugin-dir .`.
 
 Responses and answered questions are cached for 90 days, so a repeat
@@ -45,7 +45,7 @@ Stdlib only, no dependencies.
     src/swiggy_food/parse.py    payload shapes and their traps
     src/swiggy_food/cli.py      command line
     skills/food-research/SKILL.md   how to use the data well
-    bin/swiggy-food                 wrapper the plugin puts on PATH
+    scripts/swiggy-food             wrapper the skill runs
     .claude-plugin/                 plugin and marketplace manifests
 
 ## Notes

@@ -22,23 +22,24 @@ a confidently wrong answer.
 ## The tool
 
 ```bash
-swiggy-food locate "Koramangala, Bengaluru"          # address/locality -> coordinate
-swiggy-food locate "<full address>" --save home      # remember it under a name
-swiggy-food places                                   # what is already saved
+"${CLAUDE_PLUGIN_ROOT}/scripts/swiggy-food" locate "Koramangala, Bengaluru"          # address/locality -> coordinate
+"${CLAUDE_PLUGIN_ROOT}/scripts/swiggy-food" locate "<full address>" --save home      # remember it under a name
+"${CLAUDE_PLUGIN_ROOT}/scripts/swiggy-food" places                                   # what is already saved
 
-swiggy-food search "butter chicken" "murgh makhani" --place home --max-km 5
-swiggy-food search "butter chicken" --place "Koramangala, Bengaluru" --cuisine "north indian"
-swiggy-food menu 934504 --place home --grep alfredo
-swiggy-food menu 934504 --place home --grep noodles --photos   # dish photo URLs
-swiggy-food near --place home
+"${CLAUDE_PLUGIN_ROOT}/scripts/swiggy-food" search "butter chicken" "murgh makhani" --place home --max-km 5
+"${CLAUDE_PLUGIN_ROOT}/scripts/swiggy-food" search "butter chicken" --place "Koramangala, Bengaluru" --cuisine "north indian"
+"${CLAUDE_PLUGIN_ROOT}/scripts/swiggy-food" menu 934504 --place home --grep alfredo
+"${CLAUDE_PLUGIN_ROOT}/scripts/swiggy-food" menu 934504 --place home --grep noodles --photos   # dish photo URLs
+"${CLAUDE_PLUGIN_ROOT}/scripts/swiggy-food" near --place home
 
-swiggy-food recall --grep biryani                    # what was asked before, and the answer
-swiggy-food search "biryani" --place home --fresh    # ignore the cache, refetch
-swiggy-food cache                                    # size, age, location
+"${CLAUDE_PLUGIN_ROOT}/scripts/swiggy-food" recall --grep biryani                    # what was asked before, and the answer
+"${CLAUDE_PLUGIN_ROOT}/scripts/swiggy-food" search "biryani" --place home --fresh    # ignore the cache, refetch
+"${CLAUDE_PLUGIN_ROOT}/scripts/swiggy-food" cache                                    # size, age, location
 ```
 
-`swiggy-food` is on the Bash `PATH` while this plugin is enabled. It needs `uv`, which
-fetches Python 3.13 on first run. If the command is not found, run
+Run the tool as `"${CLAUDE_PLUGIN_ROOT}/scripts/swiggy-food"`, quoted as shown. The rest of
+this skill writes `swiggy-food <command>` for short; always run it with the full path. It
+needs `uv`, which fetches Python 3.13 on first run. If the script fails to start, run
 `uv run --project "${CLAUDE_PLUGIN_ROOT}" swiggy-food` in its place.
 
 Every data command takes `--place` (a saved name, or a locality to geocode) or explicit
@@ -153,8 +154,8 @@ declared undeliverable this way in one session; all six delivered.
 To test deliverability, ask the endpoint about the restaurant directly:
 
 ```bash
-swiggy-food search "Once Upon A Flame" --place home --max-km 25   # by name
-swiggy-food menu 9927 --place home                               # or straight to the menu
+"${CLAUDE_PLUGIN_ROOT}/scripts/swiggy-food" search "Once Upon A Flame" --place home --max-km 25   # by name
+"${CLAUDE_PLUGIN_ROOT}/scripts/swiggy-food" menu 9927 --place home                               # or straight to the menu
 ```
 
 If it comes back with a distance from the user's coordinate, it serves that address.

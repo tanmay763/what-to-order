@@ -11,7 +11,7 @@ README covers the layout, the CLI, and where data lives.
   a check that the two version strings match, and an offline smoke test of the CLI. CI
   runs the same target as the required `ci` check on every PR to `main`.
 - `main` takes changes only through squash-merged PRs.
-- Ruff is a dev dependency. `bin/swiggy-food` runs with `--no-dev`, so plugin users never
+- Ruff is a dev dependency. `scripts/swiggy-food` runs with `--no-dev`, so plugin users never
   install it.
 
 This file is in `.claude/` and not at the repository root. The validator warns about a
@@ -23,7 +23,7 @@ The plugin uses semantic versioning. Installed users stay on the version in
 `.claude-plugin/plugin.json` until it changes, so a change they should receive needs a
 version bump.
 
-When a change touches what the plugin ships (`src/`, `skills/`, `bin/`,
+When a change touches what the plugin ships (`src/`, `skills/`, `scripts/`,
 `.claude-plugin/`, `pyproject.toml`), do these steps:
 
 1. Propose a bump to the user and give the reason. Use **patch** for a fix that does not

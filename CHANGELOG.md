@@ -6,6 +6,12 @@ All notable changes to this project are recorded here. The format follows
 
 ## [Unreleased]
 
+### Changed
+
+- The CLI wrapper moved from `bin/swiggy-food` to `scripts/swiggy-food`, and the skill runs it
+  by its full path under `${CLAUDE_PLUGIN_ROOT}`. The plugin no longer puts `swiggy-food` on
+  the Bash `PATH`.
+
 ## [0.1.0] - 2026-10-09
 
 ### Added
